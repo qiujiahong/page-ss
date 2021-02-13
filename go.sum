@@ -1,2 +1,5 @@
 github.com/icattlecoder/godaemon v0.0.0-20140627053409-f0fff2a3c017 h1:2eHCVPt8/pPE7z6vYpn7T4127uEF+pSIQVRsQDewRAI=
 github.com/icattlecoder/godaemon v0.0.0-20140627053409-f0fff2a3c017/go.mod h1:fuSLffm84em5QqYaaFttboZq0bvWJal6SBHJH+J0xmY=
+gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
+gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b h1:h8qDotaEPuJATrMmW04NCwg7v22aHH28wwpauUhK9Oo=
+gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=

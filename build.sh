@@ -7,7 +7,7 @@ CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build ./
 mkdir -p dist/${version}/${repo}_mac
 mv ${repo} dist/${version}/${repo}_mac
 cp ./script/run.sh dist/${version}/${repo}_mac
-#cp -rf config dist/${version}/${repo}_mac
+#cp -rf conf dist/${version}/${repo}_mac
 cp docs/help.md dist/${version}/${repo}_mac
 
 
@@ -16,7 +16,7 @@ CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build ./
 mkdir -p dist/${version}/${repo}_linux
 mv ${repo} dist/${version}/${repo}_linux
 cp ./script/run.sh dist/${version}/${repo}_linux
-#cp -rf config dist/${version}/${repo}_linux
+#cp -rf conf dist/${version}/${repo}_linux
 cp docs/help.md dist/${version}/${repo}_linux
 
 
@@ -25,7 +25,7 @@ CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build ./
 mkdir -p dist/${version}/${repo}_win
 mv ${repo}.exe dist/${version}/${repo}_win
 cp ./script/run.bat dist/${version}/${repo}_win
-#cp -rf config dist/${version}/${repo}_win
+#cp -rf conf dist/${version}/${repo}_win
 cp docs/help.md dist/${version}/${repo}_win
 
 # 拷贝
