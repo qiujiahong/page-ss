@@ -4,6 +4,7 @@ go 1.15
 
 require (
 	github.com/icattlecoder/godaemon v0.0.0-20140627053409-f0fff2a3c017
-	gopkg.in/macaron.v1 v1.4.0 // indirect
+	github.com/smartystreets/goconvey v1.6.4
+	gopkg.in/macaron.v1 v1.4.0
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 )
