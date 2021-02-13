@@ -27,10 +27,6 @@ func (s  *Server) home(ctx *macaron.Context)   string {
 	return fmt.Sprintf("the request path is: %v,port is:%v",ctx.Req.RequestURI,  s.port)
 }
 
-func (s  *Server) render(ctx *macaron.Context)   string {
-	return fmt.Sprintf("the request path is: %v,port is:%v",ctx.Req.RequestURI,  s.port)
-}
-
 
 
 

@@ -10,6 +10,31 @@ import (
 	"math"
 )
 
+
+func GetFullScreenImageBytes(url string,quality int64,outPath string) []byte {
+	// create context
+	ctx, cancel := chromedp.NewContext(context.Background())
+	defer cancel()
+
+	// capture screenshot of an element
+	var buf []byte
+	//if err := chromedp.Run(ctx, elementScreenshot(`https://www.baidu.com/`, `#main`, &buf)); err != nil {
+	//	log.Fatal(err)
+	//}
+	//if err := ioutil.WriteFile("elementScreenshot.png", buf, 0o644); err != nil {
+	//	log.Fatal(err)
+	//}
+	// capture entire browser viewport, returning png with quality=90
+	if err := chromedp.Run(ctx, fullScreenshot(url, quality, &buf)); err != nil {
+		log.Fatal(err)
+	}
+	//if err := ioutil.WriteFile(outPath, buf, 0o644); err != nil {
+	//	log.Fatal(err)
+	//}
+	return  buf
+}
+
+
 func GetFullScreenImage(url string,quality int64,outPath string) {
 	// create context
 	ctx, cancel := chromedp.NewContext(context.Background())

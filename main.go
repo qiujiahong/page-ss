@@ -9,7 +9,6 @@ import (
 
 
 func main() {
-	fmt.Printf("abc")
 	config.Init()
 	fmt.Printf("config:%v",config.Global)
 	//utils.GetFullScreenImage("https://www.baidu.com",90,"./data/fullScreenshot1.png")
