@@ -1,4 +1,4 @@
-version=v1.5
+version=v1.5_$(date +%Y%m%d)
 repo=page-ss
 
 rm -rf dist/
