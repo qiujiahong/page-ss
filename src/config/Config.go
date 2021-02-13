@@ -10,6 +10,7 @@ type Config struct {
 	ProxyUrl string `yaml:"proxyUrl"`
 	ForwardHeader string `yaml:"forwardHeader"`
 	ForwardCookie string `yaml:"forwardCookie"`
+	Port int `yaml:"port"`
 }
 
 var Global = &Config{}
