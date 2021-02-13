@@ -5,6 +5,12 @@
 page screenshot 页面截图工具
 
 
+## 调试程序 
+
+```bash 
+fresh 
+```
+
 
 ## 单元测试
 
