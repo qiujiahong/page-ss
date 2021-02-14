@@ -20,4 +20,3 @@ func (s  *Server) render(ctx *macaron.Context)   {
 	logger.Log.Debug("return data")
 	ctx.Resp.Write(data)
 }
-C
