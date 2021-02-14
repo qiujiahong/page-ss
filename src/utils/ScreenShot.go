@@ -2,14 +2,17 @@ package utils
 
 import (
 	"context"
+	"github.com/chromedp/cdproto/cdp"
 	"github.com/chromedp/cdproto/emulation"
 	"github.com/chromedp/cdproto/network"
 	"github.com/chromedp/cdproto/page"
 	"github.com/chromedp/chromedp"
-	"io/ioutil"
 	"log"
 	"math"
 	"net/http"
+	"page-ss/src/config"
+	"page-ss/src/service/logger"
+	"strings"
 )
 
 
@@ -37,7 +40,7 @@ func GetFullScreenImageBytesWithHeader(url string,quality int64,headers map[stri
 	// capture screenshot of an element
 	var buf []byte
 	// capture entire browser viewport, returning png with quality=90
-	if err := chromedp.Run(ctx, fullScreenshotWithHeader(url, quality,headers, &buf)); err != nil {
+	if err := chromedp.Run(ctx, fullScreenshotWithHeader(url, quality,headers,cookies, &buf)); err != nil {
 		log.Fatal(err)
 		return err,nil
 	}
@@ -46,29 +49,29 @@ func GetFullScreenImageBytesWithHeader(url string,quality int64,headers map[stri
 
 
 
-func GetFullScreenImage(url string,quality int64,outPath string) {
-	// create context
-	ctx, cancel := chromedp.NewContext(context.Background())
-	defer cancel()
-
-	// capture screenshot of an element
-	var buf []byte
-	//if err := chromedp.Run(ctx, elementScreenshot(`https://www.baidu.com/`, `#main`, &buf)); err != nil {
-	//	log.Fatal(err)
-	//}
-	//if err := ioutil.WriteFile("elementScreenshot.png", buf, 0o644); err != nil {
-	//	log.Fatal(err)
-	//}
-	// capture entire browser viewport, returning png with quality=90
-	if err := chromedp.Run(ctx, fullScreenshot(url, quality, &buf)); err != nil {
-		log.Fatal(err)
-	}
-	if err := ioutil.WriteFile(outPath, buf, 0o644); err != nil {
-		log.Fatal(err)
-	}
-
-	log.Printf("wrote elementScreenshot.png and fullScreenshot.png")
-}
+//func GetFullScreenImage(url string,quality int64,outPath string) {
+//	// create context
+//	ctx, cancel := chromedp.NewContext(context.Background())
+//	defer cancel()
+//
+//	// capture screenshot of an element
+//	var buf []byte
+//	//if err := chromedp.Run(ctx, elementScreenshot(`https://www.baidu.com/`, `#main`, &buf)); err != nil {
+//	//	log.Fatal(err)
+//	//}
+//	//if err := ioutil.WriteFile("elementScreenshot.png", buf, 0o644); err != nil {
+//	//	log.Fatal(err)
+//	//}
+//	// capture entire browser viewport, returning png with quality=90
+//	if err := chromedp.Run(ctx, fullScreenshot(url, quality, &buf)); err != nil {
+//		log.Fatal(err)
+//	}
+//	if err := ioutil.WriteFile(outPath, buf, 0o644); err != nil {
+//		log.Fatal(err)
+//	}
+//
+//	log.Printf("wrote elementScreenshot.png and fullScreenshot.png")
+//}
 
 // elementScreenshot takes a screenshot of a specific element.
 func elementScreenshot(urlstr, sel string, res *[]byte) chromedp.Tasks {
@@ -135,8 +138,31 @@ func fullScreenshot(urlstr string, quality int64, res *[]byte) chromedp.Tasks {
 // Liberally copied from puppeteer's source.
 //
 // Note: this will override the viewport emulation settings.
-func fullScreenshotWithHeader(urlstr string, quality int64,headers map[string]interface{}, res *[]byte) chromedp.Tasks {
+func fullScreenshotWithHeader(urlstr string, quality int64,headers map[string]interface{}, cookies []*http.Cookie,res *[]byte) chromedp.Tasks {
+
 	return chromedp.Tasks{
+		chromedp.ActionFunc(func(ctx context.Context) error {
+			// add cookies to chrome
+		    domain := strings.Replace(config.Global.ProxyUrl, "http://", "", 1 )
+			domain = strings.Replace(config.Global.ProxyUrl, "https://", "", 1 )
+			for i := 0; i < len(cookies); i += 1 {
+				//logger.Log.Info("cookies:",cookies[i])
+				//logger.Log.Info("Domain:",cookies[i].Domain)
+				//logger.Log.Info("Path:",cookies[i].Path)
+				expr := cdp.TimeSinceEpoch(cookies[i].Expires)
+				err := network.SetCookie(cookies[i].Name, cookies[i].Value).
+					WithExpires(&expr).
+					WithDomain(domain).
+					WithPath("/").
+					WithHTTPOnly(cookies[i].HttpOnly).
+					Do(ctx)
+				if err != nil {
+					logger.Log.Error("Cookie error ",cookies[i],err)
+					return err
+				}
+			}
+			return nil
+		}),
 		network.SetExtraHTTPHeaders(network.Headers(headers)),
 		chromedp.Navigate(urlstr),
 		chromedp.ActionFunc(func(ctx context.Context) error {

@@ -53,7 +53,7 @@ func GetHeaders(ctx *macaron.Context) map[string]interface{}  {
 func GetCookies(ctx *macaron.Context) map[string]string  {
 	//var headers map[string]string  = make(map[string]string)
 	for i, cookie := range ctx.Req.Cookies() {
-		logger.Log.Info(i,cookie)
+		logger.Log.Info(i,cookie,cookie.Domain)
 	}
 	return  nil
 }
