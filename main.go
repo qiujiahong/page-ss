@@ -1,16 +1,22 @@
 package main
 
 import (
-	"fmt"
 	_ "github.com/icattlecoder/godaemon"
 	"page-ss/src/config"
 	"page-ss/src/controllers"
+	"page-ss/src/service/logger"
 )
 
-
 func main() {
-	config.Init()
-	fmt.Printf("config:%v",config.Global)
-	//utils.GetFullScreenImage("https://www.baidu.com",90,"./data/fullScreenshot1.png")
+	setup()
+	logger.Log.Debug("hello this is debug")
+	logger.Log.Info("Server started:")
+	logger.Log.Info("config: ",config.Global)
 	controllers.Init()
 }
+
+func setup()  {
+	config.Init()
+	logger.Init()
+}
+

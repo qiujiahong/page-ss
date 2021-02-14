@@ -3,3 +3,6 @@ dist
 data/*.png
 tmp
 docker/apps/
+logs/
+foot.log
+foot.err
