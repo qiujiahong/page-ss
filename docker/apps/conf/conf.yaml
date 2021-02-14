@@ -1,9 +1,0 @@
-# 服务端口
-port: 8080
-# www.baidu.com/render     代理到 www.baidu.com     截图
-# www.baidu.com/render/abc 代理到 www.baidu.com/abc 截图
-proxyUrl: https://www.baidu.com
-# 是否转发header
-forwardHeader: false
-# 是否转发cookie
-forwardCookie: false

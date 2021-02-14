@@ -2,3 +2,4 @@
 dist
 data/*.png
 tmp
+docker/apps/
