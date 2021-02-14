@@ -6,7 +6,6 @@ import (
 	"page-ss/src/service/logger"
 	"page-ss/src/service/screenShotService"
 	"page-ss/src/utils"
-	"strconv"
 )
 
 func (s  *Server) render(ctx *macaron.Context)   {
@@ -16,12 +15,15 @@ func (s  *Server) render(ctx *macaron.Context)   {
     if err!=nil {
 		ctx.Resp.WriteHeader(500)
 		ctx.Resp.Write([]byte("get screenshot failed."))
+		SendResponse(ctx,500,data,"")
+
 	} else{
 		logger.Log.Debug("proxy url end return length  = ",len(data))
-		ctx.Resp.WriteHeader(200)
-		ctx.Resp.Header().Set("Content-Type", "image/png")
-		ctx.Resp.Header().Set("Content-Length", strconv.Itoa(len(data)))
-		logger.Log.Debug("return data")
-		ctx.Resp.Write(data)
+		SendResponse(ctx,200,data,"image/png")
+		//ctx.Resp.WriteHeader(200)
+		//ctx.Resp.Header().Set("Content-Type", "image/png")
+		//ctx.Resp.Header().Set("Content-Length", strconv.Itoa(len(data)))
+		//logger.Log.Debug("return data")
+		//ctx.Resp.Write(data)
 	}
 }
