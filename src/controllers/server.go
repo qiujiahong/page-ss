@@ -41,7 +41,7 @@ func (s  *Server) home(ctx *macaron.Context)   string {
 func GetHeaders(ctx *macaron.Context) map[string]interface{}  {
 	var headers map[string]interface{}  = make(map[string]interface{})
 	for s2, strings := range ctx.Req.Header {
-		//logger.Log.Info("key:",s2,"=",strings,len(strings))
+		//logger.Log.Info("header:",s2,":",strings)
 		headers[s2] = strings[0]
 	}
 	ctx.Req.Cookies()
