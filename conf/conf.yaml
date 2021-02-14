@@ -1,4 +1,5 @@
 # 服务端口
+version: v1.0
 port: 8080
 # www.baidu.com/render     代理到 www.baidu.com     截图
 # www.baidu.com/render/abc 代理到 www.baidu.com/abc 截图

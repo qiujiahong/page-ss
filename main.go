@@ -9,7 +9,6 @@ import (
 
 func main() {
 	setup()
-	logger.Log.Debug("hello this is debug")
 	logger.Log.Info("Server started:")
 	logger.Log.Info("config: ",config.Global)
 	controllers.Init()
