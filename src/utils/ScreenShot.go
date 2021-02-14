@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"log"
 	"math"
+	"net/http"
 )
 
 
@@ -25,6 +26,23 @@ func GetFullScreenImageBytes(url string,quality int64) (error, []byte) {
 	}
 	return nil,buf
 }
+
+
+func GetFullScreenImageBytesWithHeader(url string,quality int64,headers map[string]string ,cookies []*http.Cookie) (error, []byte) {
+	// create context
+	ctx, cancel := chromedp.NewContext(context.Background())
+	defer cancel()
+
+	// capture screenshot of an element
+	var buf []byte
+	// capture entire browser viewport, returning png with quality=90
+	if err := chromedp.Run(ctx, fullScreenshot(url, quality, &buf)); err != nil {
+		log.Fatal(err)
+		return err,nil
+	}
+	return nil,buf
+}
+
 
 
 func GetFullScreenImage(url string,quality int64,outPath string) {

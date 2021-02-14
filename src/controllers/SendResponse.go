@@ -11,5 +11,6 @@ func SendResponse(ctx *macaron.Context, status int,data [] byte,contentType stri
 	if contentType != "" {
 		ctx.Resp.Header().Set("Content-Type", contentType)
 	}
+
 	ctx.Resp.Write(data)
 }

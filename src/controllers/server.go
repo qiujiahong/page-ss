@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gopkg.in/macaron.v1"
 	"page-ss/src/config"
+	"page-ss/src/service/logger"
 )
 
 type Server struct {
@@ -19,14 +20,41 @@ func Init () {
 	m.Get("/", server.home)
 	m.Get("/render", server.render)
 	m.Get("/render/*", server.render)
+	m.Get("/renderWithHeader", server.renderWithHeader)
+	m.Get("/renderWithHeader/*", server.renderWithHeader)
 	m.Run(server.port)
 }
 
 
 func (s  *Server) home(ctx *macaron.Context)   string {
+	GetCookies(ctx)
+	//var headers map[string]string  = make(map[string]string)
+	//for s2, strings := range ctx.Req.Header {
+	//	logger.Log.Info("key:",s2,"=",strings,len(strings))
+	//	headers[s2] = strings[0]
+	//}
+
 	return fmt.Sprintf("the request path is: %v,port is:%v",ctx.Req.RequestURI,  s.port)
 }
 
+// curl -H "zhonngguo:nick" -H "origin: https://stackoverflow.com"  http://localhost:8080
+func GetHeaders(ctx *macaron.Context) map[string]string  {
+	var headers map[string]string  = make(map[string]string)
+	for s2, strings := range ctx.Req.Header {
+		logger.Log.Info("key:",s2,"=",strings,len(strings))
+		headers[s2] = strings[0]
+	}
+	ctx.Req.Cookies()
+	return  headers
+}
 
+//  curl http://localhost:8080 --cookie "user=root;pass=123456"
 
+func GetCookies(ctx *macaron.Context) map[string]string  {
+	var headers map[string]string  = make(map[string]string)
+	for i, cookie := range ctx.Req.Cookies() {
+		logger.Log.Info(i,cookie)
+	}
+	return  headers
+}
 
