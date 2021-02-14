@@ -28,7 +28,7 @@ func (s  *Server) renderWithHeader(ctx *macaron.Context)   {
 	url := config.Global.ProxyUrl+str
 
 	headers := GetHeaders(ctx)
-	cookies :=ctx.Req.Cookies()
+	cookies := ctx.Req.Cookies()
 
 	err,data :=	screenShotService.GetScreenShotWithHeader(url,90,headers,cookies)
 	if err!=nil {

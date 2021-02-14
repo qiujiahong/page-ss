@@ -38,10 +38,10 @@ func (s  *Server) home(ctx *macaron.Context)   string {
 }
 
 // curl -H "zhonngguo:nick" -H "origin: https://stackoverflow.com"  http://localhost:8080
-func GetHeaders(ctx *macaron.Context) map[string]string  {
-	var headers map[string]string  = make(map[string]string)
+func GetHeaders(ctx *macaron.Context) map[string]interface{}  {
+	var headers map[string]interface{}  = make(map[string]interface{})
 	for s2, strings := range ctx.Req.Header {
-		logger.Log.Info("key:",s2,"=",strings,len(strings))
+		//logger.Log.Info("key:",s2,"=",strings,len(strings))
 		headers[s2] = strings[0]
 	}
 	ctx.Req.Cookies()
@@ -51,10 +51,10 @@ func GetHeaders(ctx *macaron.Context) map[string]string  {
 //  curl http://localhost:8080 --cookie "user=root;pass=123456"
 
 func GetCookies(ctx *macaron.Context) map[string]string  {
-	var headers map[string]string  = make(map[string]string)
+	//var headers map[string]string  = make(map[string]string)
 	for i, cookie := range ctx.Req.Cookies() {
 		logger.Log.Info(i,cookie)
 	}
-	return  headers
+	return  nil
 }
 

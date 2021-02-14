@@ -19,9 +19,9 @@ func GetScreenShot(url string,quality int64) (error, []byte)  {
 	return nil,data
 }
 
-func GetScreenShotWithHeader(url string,quality int64,headers map[string]string ,cookies []*http.Cookie ) (error, []byte)  {
+func GetScreenShotWithHeader(url string,quality int64,headers map[string]interface{} ,cookies []*http.Cookie ) (error, []byte)  {
 	logger.Log.Debug("proxy url = ",url)
-	err,data := utils.GetFullScreenImageBytes(url,quality)
+	err,data := utils.GetFullScreenImageBytesWithHeader(url,quality,headers,cookies)
 	if err != nil {
 		return errors.New("image error"),nil
 	}
