@@ -14,6 +14,7 @@ require (
 	github.com/pilu/config v0.0.0-20131214182432-3eb99e6c0b9a // indirect
 	github.com/pilu/fresh v0.0.0-20190826141211-0fa698148017
 	github.com/smartystreets/goconvey v1.6.4
+	github.com/unknwon/com v0.0.0-20190804042917-757f69c95f3e
 	go.uber.org/zap v1.16.0
 	golang.org/x/sys v0.0.0-20210124154548-22da62e12c0c // indirect
 	gopkg.in/macaron.v1 v1.4.0

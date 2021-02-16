@@ -7,10 +7,10 @@ import (
 	"page-ss/src/utils"
 )
 
-func GetScreenShot(url string,quality int64) (error, []byte)  {
+func GetScreenShot(url string,quality int64,delay int64) (error, []byte)  {
 
 	logger.Log.Debug("proxy url = ",url)
-	err,data := utils.GetFullScreenImageBytes(url,quality)
+	err,data := utils.GetFullScreenImageBytesWithHeader(url,quality,nil,nil,delay)
 	if err != nil {
 		return errors.New("image error"),nil
 	}
@@ -19,9 +19,9 @@ func GetScreenShot(url string,quality int64) (error, []byte)  {
 	return nil,data
 }
 
-func GetScreenShotWithHeader(url string,quality int64,headers map[string]interface{} ,cookies []*http.Cookie ) (error, []byte)  {
+func GetScreenShotWithHeader(url string,quality int64,headers map[string]interface{} ,cookies []*http.Cookie ,delay int64) (error, []byte)  {
 	logger.Log.Debug("proxy url = ",url)
-	err,data := utils.GetFullScreenImageBytesWithHeader(url,quality,headers,cookies)
+	err,data := utils.GetFullScreenImageBytesWithHeader(url,quality,headers,cookies,delay)
 	if err != nil {
 		return errors.New("image error"),nil
 	}

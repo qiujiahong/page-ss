@@ -14,9 +14,11 @@ import (
 	"page-ss/src/config"
 	"page-ss/src/service/logger"
 	"strings"
+	"time"
 )
 
-func GetFullScreenImageBytes(url string, quality int64) (error, []byte) {
+
+func GetFullScreenImageBytesWithHeader(url string, quality int64, headers map[string]interface{}, cookies []*http.Cookie,delay int64) (error, []byte) {
 	// create context
 	ctx, cancel := chromedp.NewContext(context.Background())
 	defer cancel()
@@ -24,23 +26,7 @@ func GetFullScreenImageBytes(url string, quality int64) (error, []byte) {
 	// capture screenshot of an element
 	var buf []byte
 	// capture entire browser viewport, returning png with quality=90
-	//if err := chromedp.Run(ctx, fullScreenshot(url, quality, &buf)); err != nil {
-	if err := chromedp.Run(ctx, fullScreenshotWithHeader(url, quality, nil, nil, &buf)); err != nil {
-		log.Fatal(err)
-		return err, nil
-	}
-	return nil, buf
-}
-
-func GetFullScreenImageBytesWithHeader(url string, quality int64, headers map[string]interface{}, cookies []*http.Cookie) (error, []byte) {
-	// create context
-	ctx, cancel := chromedp.NewContext(context.Background())
-	defer cancel()
-
-	// capture screenshot of an element
-	var buf []byte
-	// capture entire browser viewport, returning png with quality=90
-	if err := chromedp.Run(ctx, fullScreenshotWithHeader(url, quality, headers, cookies, &buf)); err != nil {
+	if err := chromedp.Run(ctx, fullScreenshotWithHeader(url, quality, headers, cookies,delay, &buf)); err != nil {
 		log.Fatal(err)
 		return err, nil
 	}
@@ -62,7 +48,7 @@ func elementScreenshot(urlstr, sel string, res *[]byte) chromedp.Tasks {
 // Liberally copied from puppeteer's source.
 //
 // Note: this will override the viewport emulation settings.
-func fullScreenshotWithHeader(urlstr string, quality int64, headers map[string]interface{}, cookies []*http.Cookie, res *[]byte) chromedp.Tasks {
+func fullScreenshotWithHeader(urlstr string, quality int64, headers map[string]interface{}, cookies []*http.Cookie,delay int64, res *[]byte) chromedp.Tasks {
 
 	tasks := chromedp.Tasks{
 		chromedp.ActionFunc(func(ctx context.Context) error {
@@ -110,6 +96,11 @@ func fullScreenshotWithHeader(urlstr string, quality int64, headers map[string]i
 			if err != nil {
 				return err
 			}
+
+			logger.Log.Debug("delay start:",delay)
+
+			time.Sleep(time.Duration(delay * 1000*1000))
+			logger.Log.Debug("delay end:",delay)
 
 			// capture screenshot
 			*res, err = page.CaptureScreenshot().

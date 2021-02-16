@@ -10,8 +10,12 @@ import (
 
 func (s  *Server) render(ctx *macaron.Context)   {
 	str := utils.Substr(ctx.Req.RequestURI,len("/render"),len(ctx.Req.RequestURI) -len("/render"))
+	urlParam := UrlParam{}
+	urlParam.Init(str)
+	delay := urlParam.ParamsInt64("__parDelay")
 	url := config.Global.ProxyUrl+str
-    err,data :=	screenShotService.GetScreenShot(url,90)
+	logger.Log.Debug("delay seconds:",delay)
+    err,data :=	screenShotService.GetScreenShot(url,90,delay)
     if err!=nil {
 		ctx.Resp.WriteHeader(500)
 		ctx.Resp.Write([]byte("get screenshot failed."))
@@ -25,12 +29,15 @@ func (s  *Server) render(ctx *macaron.Context)   {
 
 func (s  *Server) renderWithHeader(ctx *macaron.Context)   {
 	str := utils.Substr(ctx.Req.RequestURI,len("/renderWithHeader"),len(ctx.Req.RequestURI) -len("/renderWithHeader"))
+	urlParam := UrlParam{}
+	urlParam.Init(str)
+	delay := urlParam.ParamsInt64("__parDelay")
 	url := config.Global.ProxyUrl+str
-
 	headers := GetHeaders(ctx)
 	cookies := ctx.Req.Cookies()
+	logger.Log.Debug("delay seconds:",delay)
 
-	err,data :=	screenShotService.GetScreenShotWithHeader(url,90,headers,cookies)
+	err,data :=	screenShotService.GetScreenShotWithHeader(url,90,headers,cookies,delay)
 	if err!=nil {
 		ctx.Resp.WriteHeader(500)
 		ctx.Resp.Write([]byte("get screenshot failed."))
@@ -40,4 +47,22 @@ func (s  *Server) renderWithHeader(ctx *macaron.Context)   {
 		logger.Log.Debug("proxy url end return length  = ",len(data))
 		SendResponse(ctx,200,data,"image/png")
 	}
+}
+
+func getDelay(ctx *macaron.Context) int64 {
+	//parDelay :=  ctx.Query("parDelay")
+	logger.Log.Debug("111:",ctx.AllParams())
+	parDelay := ctx.ParamsInt64("parDelay")
+
+	logger.Log.Debug("parDelay - 	",parDelay)
+	return parDelay
+	//if parDelay == ""{
+	//	parDelay = "0"
+	//}
+	//delay, err := strconv.ParseInt(parDelay, 10, 64)
+	//if err != nil {
+	//	return  0
+	//} else{
+	//	return delay
+	//}
 }

@@ -28,12 +28,6 @@ func Init () {
 
 func (s  *Server) home(ctx *macaron.Context)   string {
 	GetCookies(ctx)
-	//var headers map[string]string  = make(map[string]string)
-	//for s2, strings := range ctx.Req.Header {
-	//	logger.Log.Info("key:",s2,"=",strings,len(strings))
-	//	headers[s2] = strings[0]
-	//}
-
 	return fmt.Sprintf("the request path is: %v,port is:%v",ctx.Req.RequestURI,  s.port)
 }
 
