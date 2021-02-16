@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"page-ss/src/config"
+	"page-ss/src/models/do"
 
 	"time"
 
@@ -98,5 +99,5 @@ func Setup() {
 	db := GetDB()
 	// 自动迁移模式
 	//db.AutoMigrate(&ParkingLot{}, &ParkingSpace{}, &Product{})
-	db.AutoMigrate()
+	db.AutoMigrate(&do.Image{})
 }
