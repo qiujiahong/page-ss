@@ -18,7 +18,7 @@ func (s  *Server) render(ctx *macaron.Context)   {
 	urlParam := dto.UrlParam{}
 	urlParam.Init(str)
 	// 3.整理proxy截图url
-	url := config.Global.ProxyUrl+str
+	url := config.Global.ProxyUrl+urlParam.UrlWithoutParams
 	// 4.获取图片
 	err,data :=	screenShotService.GetScreenShotWithHeader(url,90,nil,nil,urlParam)
 
@@ -41,7 +41,7 @@ func (s  *Server) renderWithHeader(ctx *macaron.Context)   {
 	urlParam := dto.UrlParam{}
 	urlParam.Init(str)
 	// 3. 整理proxy截图url
-	url := config.Global.ProxyUrl+str
+	url := config.Global.ProxyUrl+urlParam.UrlWithoutParams
 	// 4. 处理cookie
 	headers := GetHeaders(ctx)
 	cookies := ctx.Req.Cookies()
