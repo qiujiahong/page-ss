@@ -4,6 +4,7 @@ import (
 	"github.com/unknwon/com"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type UrlParam struct {
@@ -55,4 +56,12 @@ func (urlParam *UrlParam) ParamsBool(name string) bool {
 	}else {
 		return  ret
 	}
+}
+
+func (urlParam *UrlParam) GetValidityDay() time.Time {
+	day := urlParam.ValidityDays
+	if day == 0{
+		day = 90
+	}
+	return time.Now().AddDate(0,0,day)
 }
