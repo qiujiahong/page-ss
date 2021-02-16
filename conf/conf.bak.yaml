@@ -1,0 +1,21 @@
+cat << EOF > conf.yaml
+# 服务端口
+version: ${PPS_VERSION-v1.0}
+prefix: ${PPS_PREFIX-/pss}
+port: ${PPS_PREFIX-8080}
+# www.baidu.com/render     代理到 www.baidu.com     截图
+# www.baidu.com/render/abc 代理到 www.baidu.com/abc 截图
+proxyUrl: ${PPS_PROXYURL-https://www.baidu.com}
+DbConfig:
+#  mysql sqlite3 postgres
+  DbType: ${PPS_DBCONFIG_DBTYPE-mysql}
+  User: ${PPS_DBCONFIG_USER-root}
+  Password: ${PPS_DBCONFIG_PASSWORD-123456}
+  Host: ${PPS_DBCONFIG_HOST-127.0.0.1}
+  Port: ${PPS_DBCONFIG_PORT-3306}
+  DbName: ${PPS_DBCONFIG_DBNAME-db1}
+  MaxIdleConns: ${PPS_DBCONFIG_MAXIDLECONNS-20}
+  MaxOpenConns: ${PPS_DbConfig_MaxOpenConns-100}
+  # 连接超时时间 单位s
+  MaxLifetime: ${PPS_DBCONFIG_MAXLIFETIME-300}
+EOF

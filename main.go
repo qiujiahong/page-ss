@@ -1,3 +1,5 @@
+//+build linux darwin
+
 package main
 
 import (
@@ -23,6 +25,7 @@ func setup()  {
 	config.Init()
 	logger.Init()
 	syscall.Umask(0)
+	//utils.Umask()
 	// 打印调试
 	setting, _ := json.MarshalIndent(config.Global, "", "\t")
 	logger.Log.Debug("config information:\r\n",string(setting))
