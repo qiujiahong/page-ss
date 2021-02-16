@@ -4,3 +4,15 @@ port: 8080
 # www.baidu.com/render     代理到 www.baidu.com     截图
 # www.baidu.com/render/abc 代理到 www.baidu.com/abc 截图
 proxyUrl: https://www.baidu.com
+DbConfig:
+#  mysql sqlite3 postgres
+  DbType: mysql
+  User: root
+  Password: 123456
+  Host: 127.0.0.1
+  Port: 3306
+  DbName: db1
+  MaxIdleConns: 20
+  MaxOpenConns: 100
+  # 连接超时时间 单位s
+  MaxLifetime: 300

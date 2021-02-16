@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	_ "github.com/icattlecoder/godaemon"
 	"page-ss/src/config"
 	"page-ss/src/controllers"
@@ -10,12 +11,17 @@ import (
 func main() {
 	setup()
 	logger.Log.Info("Server started:")
-	logger.Log.Info("config: ",config.Global)
+	//logger.Log.Info("config: ",config.Global)
+	//logger.Log.Debug(config.Global)
+	//logger.Log.Debug(c.DbConfig)
 	controllers.Init()
 }
 
 func setup()  {
 	config.Init()
 	logger.Init()
+	// 打印调试
+	setting, _ := json.MarshalIndent(config.Global, "", "\t")
+	logger.Log.Debug("config information:\r\n",string(setting))
 }
 
