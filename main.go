@@ -5,6 +5,7 @@ import (
 	_ "github.com/icattlecoder/godaemon"
 	"page-ss/src/config"
 	"page-ss/src/controllers"
+	"page-ss/src/models"
 	"page-ss/src/service/logger"
 )
 
@@ -23,5 +24,8 @@ func setup()  {
 	// 打印调试
 	setting, _ := json.MarshalIndent(config.Global, "", "\t")
 	logger.Log.Debug("config information:\r\n",string(setting))
+
+	//设置db连接池
+	models.Setup()
 }
 

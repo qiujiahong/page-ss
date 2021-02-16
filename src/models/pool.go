@@ -1,11 +1,10 @@
-package dao
+package models
 
 import (
 	"fmt"
 	"log"
 	"page-ss/src/config"
 
-	// "report/src/logger"
 	"time"
 
 	"gorm.io/driver/mysql"
@@ -19,19 +18,20 @@ import (
 var db *gorm.DB
 
 // Setup 初始化连接
-func Setup() {
+func setupPool() {
 	// db = newConnection()
 	var dbURI string
 	var dialector gorm.Dialector
 
 	if config.Global.DbConfig.DbType == "mysql" {
 		// logger.Log.Info("select mysql")
-		dbURI = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=true",
+		dbURI = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=true",
 			config.Global.DbConfig.User,
 			config.Global.DbConfig.Password,
 			config.Global.DbConfig.Host,
 			config.Global.DbConfig.Port,
 			config.Global.DbConfig.DbName)
+		fmt.Printf("dbURI=%v",dbURI)
 		dialector = mysql.New(mysql.Config{
 			DSN:                       dbURI, // data source name
 			DefaultStringSize:         256,   // default size for string fields
@@ -42,7 +42,7 @@ func Setup() {
 		})
 	} else if config.Global.DbConfig.DbType == "postgres" {
 		// logger.Log.Info("select postgres")
-		dbURI = fmt.Sprintf("host=%s port=%s user=%s dbname=%s sslmode=disable password=%s",
+		dbURI = fmt.Sprintf("host=%s port=%d user=%s dbname=%s sslmode=disable password=%s",
 			config.Global.DbConfig.Host,
 			config.Global.DbConfig.Port,
 			config.Global.DbConfig.User,
@@ -72,7 +72,7 @@ func Setup() {
 	sqlDB.SetMaxOpenConns(100)                  // SetMaxOpenConns sets the maximum number of open connections to the database.
 	sqlDB.SetConnMaxLifetime(time.Second * 600) // SetConnMaxLifetime sets the maximum amount of time a connection may be reused.
 
-	// logger.Log.Info("setup new db connection......")
+	//logger.Log.Info("setup new db connection......")
 	db = conn
 }
 
@@ -81,12 +81,22 @@ func GetDB() *gorm.DB {
 	sqlDB, err := db.DB()
 	if err != nil {
 		// logger.Log.Error("connect db server failed.")
-		Setup()
+		setupPool()
 	}
 	if err := sqlDB.Ping(); err != nil {
 		sqlDB.Close()
-		Setup()
+		setupPool()
 	}
 
 	return db
+}
+
+
+// Setup 初始化数据模型
+func Setup() {
+	setupPool()
+	db := GetDB()
+	// 自动迁移模式
+	//db.AutoMigrate(&ParkingLot{}, &ParkingSpace{}, &Product{})
+	db.AutoMigrate()
 }
