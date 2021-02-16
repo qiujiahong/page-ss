@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/unknwon/com"
+	"strconv"
 	"strings"
 )
 
@@ -31,4 +32,13 @@ func (urlParam *UrlParam) GetParam(name string) string  {
 
 func (urlParam *UrlParam) ParamsInt64(name string) int64 {
 	return com.StrTo(urlParam.params[name]).MustInt64()
+}
+
+func (urlParam *UrlParam) ParamsBool(name string) bool {
+	ret,err := strconv.ParseBool(urlParam.params[name])
+	if err != nil{
+		return false
+	}else {
+		return  ret
+	}
 }

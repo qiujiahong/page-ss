@@ -11,6 +11,12 @@ page screenshot 页面截图工具
 fresh 
 ```
 
+## 可携带参数
+
+
+* 延迟截图： __parDelay=12
+* 强制刷新： __forceUpdate=true
+
 
 ## 单元测试
 
