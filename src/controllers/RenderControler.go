@@ -11,7 +11,9 @@ import (
 
 func (s  *Server) render(ctx *macaron.Context)   {
 	// 1.处理url
-	str := utils.Substr(ctx.Req.RequestURI,len("/render"),len(ctx.Req.RequestURI) -len("/render"))
+	str := utils.Substr(ctx.Req.RequestURI,len(config.Global.Prefix +"/render"),
+		len(ctx.Req.RequestURI) -len(config.Global.Prefix +"/render"))
+
 	// 2.获取url参数
 	urlParam := dto.UrlParam{}
 	urlParam.Init(str)
@@ -33,7 +35,8 @@ func (s  *Server) render(ctx *macaron.Context)   {
 
 func (s  *Server) renderWithHeader(ctx *macaron.Context)   {
 	// 1. 整理请求url
-	str := utils.Substr(ctx.Req.RequestURI,len("/renderWithHeader"),len(ctx.Req.RequestURI) -len("/renderWithHeader"))
+	str := utils.Substr(ctx.Req.RequestURI,len(config.Global.Prefix +"/renderWithHeader"),
+		len(ctx.Req.RequestURI) -len(config.Global.Prefix +"/renderWithHeader"))
 	// 2. 处理url参数
 	urlParam := dto.UrlParam{}
 	urlParam.Init(str)

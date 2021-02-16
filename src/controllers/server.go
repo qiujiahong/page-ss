@@ -5,6 +5,7 @@ import (
 	"gopkg.in/macaron.v1"
 	"page-ss/src/config"
 	"page-ss/src/service/logger"
+	"time"
 )
 
 type Server struct {
@@ -17,11 +18,24 @@ func Init () {
 	server.port = config.Global.Port
 	m := macaron.Classic()
 	m.Use(macaron.Logger())
-	m.Get("/", server.home)
-	m.Get("/render", server.render)
-	m.Get("/render/*", server.render)
-	m.Get("/renderWithHeader", server.renderWithHeader)
-	m.Get("/renderWithHeader/*", server.renderWithHeader)
+	m.Use(macaron.Static("images", macaron.StaticOptions{
+		// Prefix is the optional prefix used to serve the static directory content. Default is empty string.
+		Prefix: config.Global.Prefix+"/images",
+		// SkipLogging will disable [Static] log messages when a static file is served. Default is false.
+		SkipLogging: true,
+		// IndexFile defines which file to serve as index if it exists. Default is "index.html".
+		IndexFile: "index.html",
+		// Expires defines which user-defined function to use for producing a HTTP Expires Header. Default is nil.
+		// https://developers.google.com/speed/docs/insights/LeverageBrowserCaching
+		Expires: func() string {
+			return time.Now().Add(24 * 60 * time.Minute).UTC().Format("Mon, 02 Jan 2006 15:04:05 GMT")
+		},
+	}))
+	m.Get(config.Global.Prefix+"/", server.home)
+	m.Get(config.Global.Prefix+"/render", server.render)
+	m.Get(config.Global.Prefix+"/render/*", server.render)
+	m.Get(config.Global.Prefix+"/renderWithHeader", server.renderWithHeader)
+	m.Get(config.Global.Prefix+"/renderWithHeader/*", server.renderWithHeader)
 	m.Run(server.port)
 }
 

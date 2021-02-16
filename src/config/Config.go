@@ -19,6 +19,7 @@ type DbConfig struct {
 }
 
 type Config struct {
+	Prefix string `yaml:"prefix"`
 	ProxyUrl string `yaml:"proxyUrl"`
 	Port int `yaml:"port"`
 	DbConfig *DbConfig `yaml:"DbConfig"`
