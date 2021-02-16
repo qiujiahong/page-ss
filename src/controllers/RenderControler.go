@@ -48,21 +48,3 @@ func (s  *Server) renderWithHeader(ctx *macaron.Context)   {
 		SendResponse(ctx,200,data,"image/png")
 	}
 }
-
-func getDelay(ctx *macaron.Context) int64 {
-	//parDelay :=  ctx.Query("parDelay")
-	logger.Log.Debug("111:",ctx.AllParams())
-	parDelay := ctx.ParamsInt64("parDelay")
-
-	logger.Log.Debug("parDelay - 	",parDelay)
-	return parDelay
-	//if parDelay == ""{
-	//	parDelay = "0"
-	//}
-	//delay, err := strconv.ParseInt(parDelay, 10, 64)
-	//if err != nil {
-	//	return  0
-	//} else{
-	//	return delay
-	//}
-}

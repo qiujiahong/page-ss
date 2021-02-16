@@ -97,10 +97,9 @@ func fullScreenshotWithHeader(urlstr string, quality int64, headers map[string]i
 				return err
 			}
 
-			logger.Log.Debug("delay start:",delay)
-
-			time.Sleep(time.Duration(delay * 1000*1000))
-			logger.Log.Debug("delay end:",delay)
+			//logger.Log.Debug("delay start:",delay)
+			time.Sleep(time.Duration(delay)*time.Second)
+			//logger.Log.Debug("delay end:",delay)
 
 			// capture screenshot
 			*res, err = page.CaptureScreenshot().
