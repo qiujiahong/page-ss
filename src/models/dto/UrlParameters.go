@@ -1,4 +1,4 @@
-package controllers
+package dto
 
 import (
 	"github.com/unknwon/com"
@@ -8,6 +8,11 @@ import (
 
 type UrlParam struct {
 	params	map[string] string
+	ParDelay int64
+	ForceUpdate bool
+	UseCache  bool
+	AutoFlush bool
+	ValidityDays int
 }
 
 func (urlParam *UrlParam) Init(path string)  {
@@ -24,6 +29,12 @@ func (urlParam *UrlParam) Init(path string)  {
 			urlParam.params[item[0]] = item[1]
 		}
 	}
+	// get config parameters
+	urlParam.ParDelay = urlParam.ParamsInt64("__parDelay")
+	urlParam.ForceUpdate =  urlParam.ParamsBool("__forceUpdate")
+	urlParam.UseCache   = urlParam.ParamsBool("__useCache")
+	urlParam.AutoFlush  = urlParam.ParamsBool("__autoFlush")
+	urlParam.ValidityDays =urlParam.ParamsInt("__validityDays")
 }
 
 func (urlParam *UrlParam) GetParam(name string) string  {
@@ -32,6 +43,9 @@ func (urlParam *UrlParam) GetParam(name string) string  {
 
 func (urlParam *UrlParam) ParamsInt64(name string) int64 {
 	return com.StrTo(urlParam.params[name]).MustInt64()
+}
+func (urlParam *UrlParam) ParamsInt(name string) int {
+	return com.StrTo(urlParam.params[name]).MustInt()
 }
 
 func (urlParam *UrlParam) ParamsBool(name string) bool {
