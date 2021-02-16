@@ -68,9 +68,9 @@ func setupPool() {
 	if err != nil {
 		// logger.Log.Error("connect db server failed.")
 	}
-	sqlDB.SetMaxIdleConns(10)                   // SetMaxIdleConns sets the maximum number of connections in the idle connection pool.
-	sqlDB.SetMaxOpenConns(100)                  // SetMaxOpenConns sets the maximum number of open connections to the database.
-	sqlDB.SetConnMaxLifetime(time.Second * 600) // SetConnMaxLifetime sets the maximum amount of time a connection may be reused.
+	sqlDB.SetMaxIdleConns(config.Global.DbConfig.MaxIdleConns)                   // SetMaxIdleConns sets the maximum number of connections in the idle connection pool.
+	sqlDB.SetMaxOpenConns(config.Global.DbConfig.MaxOpenConns)                  // SetMaxOpenConns sets the maximum number of open connections to the database.
+	sqlDB.SetConnMaxLifetime(time.Second * time.Duration(config.Global.DbConfig.MaxLifetime)) // SetConnMaxLifetime sets the maximum amount of time a connection may be reused.
 
 	//logger.Log.Info("setup new db connection......")
 	db = conn
