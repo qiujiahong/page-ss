@@ -43,7 +43,7 @@ func elementScreenshot(urlstr, sel string, res *[]byte) chromedp.Tasks {
 	}
 }
 
-// fullScreenshot takes a screenshot of the entire browser viewport.
+//// fullScreenshot takes a screenshot of the entire browser viewport.
 //
 // Liberally copied from puppeteer's source.
 //
@@ -128,4 +128,9 @@ func setHeaders(headers map[string]interface{}) (chromedp.Tasks, error) {
 	} else {
 		return nil, errors.New("no header inside")
 	}
+}
+
+func GetImagePath() (string,string) {
+	path := "images/"+time.Now().Format("2006-01-02")+"/"
+	return path, GetRandomString(28)+".png"
 }

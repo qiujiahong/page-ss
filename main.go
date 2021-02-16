@@ -7,6 +7,7 @@ import (
 	"page-ss/src/controllers"
 	"page-ss/src/models"
 	"page-ss/src/service/logger"
+	"syscall"
 )
 
 func main() {
@@ -21,6 +22,7 @@ func main() {
 func setup()  {
 	config.Init()
 	logger.Init()
+	syscall.Umask(0)
 	// 打印调试
 	setting, _ := json.MarshalIndent(config.Global, "", "\t")
 	logger.Log.Debug("config information:\r\n",string(setting))
