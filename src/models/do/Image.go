@@ -21,3 +21,6 @@ func (Image) TableName() string {
 	return "images"
 }
 
+func (image Image) GetFullPath() string {
+	return image.Path + image.Name
+}

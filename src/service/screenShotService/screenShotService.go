@@ -33,7 +33,11 @@ func GetScreenShotWithHeader(url string, quality int64, headers map[string]inter
 		getNewImage = true
 	} else {  // 检查缓存
 		if image.Id != 0 {
-			logger.Log.Debug("if....",url)
+			logger.Log.Debugf("image exist: %v %v",image.GetFullPath(),image.Url)
+			data,err  = ioutil.ReadFile(image.GetFullPath())
+			if err != nil {
+				return errors.New("get image cache error"),nil
+			}
 		} else{
 			logger.Log.Debug("no cache:",url)
 			err,data = utils.GetFullScreenImageBytesWithHeader(url,quality,headers,cookies,urlParam.ParDelay)
@@ -42,16 +46,6 @@ func GetScreenShotWithHeader(url string, quality int64, headers map[string]inter
 			}
 			getNewImage = true
 		}
-		//	if err = db.Where(&do.Image{Url: url}).First(&image).Error; err == nil {//查询有数据,有缓存则是用哪个缓存
-		//	logger.Log.Debug("if....",url)
-		//} else { // 无缓存则重新截图
-		//	logger.Log.Debug("no cache:",url)
-		//	err,data = utils.GetFullScreenImageBytesWithHeader(url,quality,headers,cookies,urlParam.ParDelay)
-		//	if err != nil {
-		//		return errors.New("image error"),nil
-		//	}
-		//	getNewImage = true
-		//}
 	}
 
 	if getNewImage && urlParam.UseCache {
