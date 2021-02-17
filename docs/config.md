@@ -11,3 +11,5 @@
 | 是否自动刷新  |__autoFlush |bool | true|
 | 有效期       |__validityDays |int | 90 |
 
+
+
