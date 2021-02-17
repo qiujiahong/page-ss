@@ -2,7 +2,7 @@
 
 ## 简介
 
-page screenshot 页面截图工具
+page screenshot 页面截图工具,可以使用page-ss给任意web界面截图
 
 
 ## 调试程序 
@@ -27,6 +27,12 @@ fresh
 ```bash
  $GOPATH/bin/goconvey
 ```
+
+
+## todo 
+
+- [ ] 支持css selector 部分截图
+
 
 ## 参考资料 
 
