@@ -39,7 +39,7 @@ docker run --name nginx \
 * 访问截图
 
 ```bash 
-# 截图，不转发header和cookie，使用缓存
+# 截图，不转发header和cookie，使用缓存，延迟1S
 http://localhost/pss/render/d/Y-8g9QPMk/test1?orgId=1&kiosk&__parDelay=1&__useCache=true
 # 截图，转发header和cookie，使用缓冲，延迟1S
 http://localhost/pss/renderWithHeader/d/Y-8g9QPMk/test1?orgId=1&kiosk&__parDelay=1&__useCache=true
