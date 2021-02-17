@@ -42,6 +42,7 @@ func GetScreenShotWithHeader(url string, quality int64, headers map[string]inter
 					return errors.New("image error"),nil
 				}
 				getNewImage = true
+				urlParam.UseCache = true
 			}
 		} else{
 			logger.Log.Debug("no cache:",url)
@@ -69,12 +70,12 @@ func GetScreenShotWithHeader(url string, quality int64, headers map[string]inter
 		} else { // 更新
 			db.Save(&image)
 		}
-		logger.Log.Debug("save files:",image.Path + image.Name)
+		logger.Log.Debug("save files:",image.GetFullPath())
 		err := os.MkdirAll(image.Path, 0766)
 		if err != nil {
 			logger.Log.Error("create path failed",err)
 		}
-		if err := ioutil.WriteFile(image.Path+image.Name, data, 0640); err != nil {
+		if err := ioutil.WriteFile(image.GetFullPath(), data, 0640); err != nil {
 			log.Fatal("save files error",err)
 		}
 	}
