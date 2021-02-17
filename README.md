@@ -74,7 +74,7 @@ docker run -p 8080:8080   \
                 (1)
 ```
 
-
+[具体使用方法](docs/details.md)
 
 
 ## 调试程序 
