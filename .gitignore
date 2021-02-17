@@ -6,3 +6,4 @@ docker/apps/
 logs/
 foot.log
 foot.err
+images/
