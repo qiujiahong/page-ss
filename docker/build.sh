@@ -11,4 +11,11 @@ docker build -t qiujiahong/page-ss:$version .
 docker push qiujiahong/page-ss:$version
 
 
-# docker run -p 8080:8080  qiujiahong/page-ss:v1.0
+
+
+
+
+
+
+
+
