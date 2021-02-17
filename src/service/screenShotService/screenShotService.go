@@ -36,7 +36,12 @@ func GetScreenShotWithHeader(url string, quality int64, headers map[string]inter
 			logger.Log.Debugf("image exist: %v %v",image.GetFullPath(),image.Url)
 			data,err  = ioutil.ReadFile(image.GetFullPath())
 			if err != nil {
-				return errors.New("get image cache error"),nil
+				logger.Log.Error("get image cache error")
+				err,data = utils.GetFullScreenImageBytesWithHeader(url,quality,headers,cookies,urlParam.ParDelay)
+				if err != nil {
+					return errors.New("image error"),nil
+				}
+				getNewImage = true
 			}
 		} else{
 			logger.Log.Debug("no cache:",url)
